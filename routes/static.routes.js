@@ -1,8 +1,10 @@
 const { Router } = require("express");
+const Blog = require("../models/Blog");
 const router = Router();
 
-router.get("/", (req, res) => {
-  res.render("home", { user: req.user });
+router.get("/", async (req, res) => {
+  const allBlogs = await Blog.find({});
+  res.render("home", { user: req.user, blogs: allBlogs });
 });
 
 router.get("/signup", (req, res) => {

@@ -5,6 +5,8 @@ const cookieParser = require("cookie-parser");
 const connectDB = require("./config/db");
 const staticRoutes = require("./routes/static.routes");
 const userRoutes = require("./routes/user.routes");
+const blogRoutes = require("./routes/blog.routes");
+
 const {
   checkForAuthenticationCookie,
 } = require("./middlewares/authentication.middleware");
@@ -25,10 +27,12 @@ app.use(checkForAuthenticationCookie("token"));
 //set EJS and views
 app.set("view engine", "ejs");
 app.set("views", path.resolve("./views"));
+app.use(express.static(path.resolve("./public")));
 
 //routes
 app.use("/", staticRoutes);
 app.use("/user/", userRoutes);
+app.use("/blog/", blogRoutes);
 
 //initiate server
 app.listen(PORT, () => console.log(`Server started at port ${PORT}`));
